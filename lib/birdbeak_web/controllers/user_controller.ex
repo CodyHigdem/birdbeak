@@ -3,8 +3,10 @@ defmodule BirdbeakWeb.UserController do
 
   alias Birdbeak.Accounts
   alias Birdbeak.Accounts.User
+  alias Birdbeak.Guardian
 
   action_fallback BirdbeakWeb.FallbackController
+
 
   def index(conn, _params) do
     users = Accounts.list_users()
@@ -20,6 +22,17 @@ defmodule BirdbeakWeb.UserController do
     end
   end
 
+"""
+@ORIGINAL
+def create(conn, %{"user" => user_params}) do
+  with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+    conn
+    |> put_status(:created)
+    |> put_resp_header("location", user_path(conn, :show, user))
+    |> render("show.json", user: user)
+  end
+end
+"""
   def show(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     render(conn, "show.json", user: user)
