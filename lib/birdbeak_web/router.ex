@@ -23,6 +23,7 @@ defmodule BirdbeakWeb.Router do
      pipe_through :api
 
      post "/sign_up", UserController, :create
+     post "/sign_in", UserController, :sign_in
      #resources "/users", UserController, only: [:create, :show]
      """
      By adding only: [:create, :show] to our public API route, we are only allowing unauthenticated users
