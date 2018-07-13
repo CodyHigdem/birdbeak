@@ -7,7 +7,7 @@ defmodule BirdbeakWeb.UserController do
 
   action_fallback BirdbeakWeb.FallbackController
 
-  def sign_in (conn, %{"email" => email, "password" => password}) do
+  def sign_in(conn, %{"email" => email, "password" => password}) do
     case Accounts.token_sign_in(email, password) do
       {:ok, token, _claims} ->
         conn |> render("jwt.json", jwt: token)
