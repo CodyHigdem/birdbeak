@@ -21,6 +21,13 @@ defmodule BirdbeakWeb.Router do
 
   scope "/api/v1", BirdbeakWeb do
      pipe_through :api
+
+     resources "/users", UserController, only: [:create, :show]
+     """
+     By adding only: [:create, :show] to our public API route, we are only allowing unauthenticated users
+     to access our controller’s create and show functions; unauthenticated users can not access delete,
+     update, or any other UserController methods through this public endpoint.
+     """
    end
 
   # Other scopes may use custom stacks.

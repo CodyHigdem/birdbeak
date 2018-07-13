@@ -27,7 +27,7 @@ config :logger, :console,
 import_config "#{Mix.env}.exs"
 
 
-config :jwt_phoenix, :auth0,
+config :birdbeak, :auth0,
   app_baseurl: System.get_env("AUTH0_BASEURL"),
   app_id: System.get_env("AUTH0_APP_ID"),
   app_secret: "AUTH0_APP_SECRET"
@@ -35,5 +35,3 @@ config :jwt_phoenix, :auth0,
     |> Kernel.||("")
     |> Base.url_decode64
     |> elem(1)
-
-    
