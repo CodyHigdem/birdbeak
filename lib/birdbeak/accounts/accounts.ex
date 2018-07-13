@@ -7,7 +7,7 @@ defmodule Birdbeak.Accounts do
   alias Birdbeak.Repo
 
   alias Birdbeak.Guardian
-  import Comeonine.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   #checkpw/2 takes in a virtual password and checks it against our password
   #i.e. hash(checkpw(password, password_hash))
 
@@ -15,6 +15,10 @@ defmodule Birdbeak.Accounts do
 
   alias Birdbeak.Accounts.User
 
+  defp email_password_auth(email, password) when is_binary(email) and is_binary(password) do
+    with {:ok, user} <- get_by_email(email),
+    do: verify_password(password, user)
+  end
 
   defp get_by_email(email) when is_binary(email) do
     case Repo.get_by(User, email: email) do
@@ -25,6 +29,15 @@ defmodule Birdbeak.Accounts do
         {:ok, user}
     end
   end
+
+  defp verify_password(password, $User{} = user) when is_binary(password) do
+    if checkpw(password, user.password_hash) do
+      {:ok, user}
+    else
+      {:error, :invalid_password}
+    end
+  end
+
   @doc """
   Returns the list of users.
 
