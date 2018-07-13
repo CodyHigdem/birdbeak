@@ -35,3 +35,9 @@ config :birdbeak, :auth0,
     |> Kernel.||("")
     |> Base.url_decode64
     |> elem(1)
+
+
+# Guardian config
+config :birdbeak, Birdbeak.Guardian,
+       issuer: "beardbeak",
+       secret_key: "VDFSjitgshz7dU+0XDqfQNqXqfpEqNah6Y5/277zSuHeO8A4EVZ1/lHMQ5J0+qhY" #Use `mix guardian.gen.secret` to generate one

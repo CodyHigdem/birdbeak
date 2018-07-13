@@ -1,7 +1,7 @@
 defmodule Birdbeak.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  #alias Birdbeak.Accounts.User
+  alias Birdbeak.Accounts.User
   import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   schema "users" do
@@ -15,14 +15,15 @@ defmodule Birdbeak.Accounts.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:email, :password, :password_confirmation]) # Remove hash, add pw + pw confirmation
-    |> validate_required([:email, :password, :password_confirmation]) # Remove hash, add pw + pw confirmation
-    |> validate_format(:email, ~r/@/) # Check that email is valid
-    |> validate_length(:password, min: 8) # Check that password length is >= 8
-    |> validate_confirmation(:password) # Check that password === password_confirmation
+    |> cast(attrs, [:email, :password, :password_confirmation])
+    |> validate_required([:email, :password, :password_confirmation])
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 8)
+    |> validate_confirmation(:password)
     |> unique_constraint(:email)
+    |> put_password_hash
   end
 
   defp put_password_hash(changeset) do
