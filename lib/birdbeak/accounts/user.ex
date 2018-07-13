@@ -1,7 +1,8 @@
 defmodule Birdbeak.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
-  alias Birdbeak.Accounts.User
+  #alias Birdbeak.Accounts.User
+  import Comeonin.Bcrypt, only: [hashpwsalt: 1]
 
   schema "users" do
     field :email, :string
@@ -28,7 +29,7 @@ defmodule Birdbeak.Accounts.User do
     case changeset do
       %Ecto.Changeset{valid?: true, changes: %{password: pass}}
         ->
-          put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(pass))
+          put_change(changeset, :password_hash, hashpwsalt(pass))
       _ ->
           changeset
     end
