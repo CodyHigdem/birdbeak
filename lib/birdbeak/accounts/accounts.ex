@@ -6,8 +6,25 @@ defmodule Birdbeak.Accounts do
   import Ecto.Query, warn: false
   alias Birdbeak.Repo
 
+  alias Birdbeak.Guardian
+  import Comeonine.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
+  #checkpw/2 takes in a virtual password and checks it against our password
+  #i.e. hash(checkpw(password, password_hash))
+
+  #dummy_checkpw makes user enumeration harder for bad actors
+
   alias Birdbeak.Accounts.User
 
+
+  defp get_by_email(email) when is_binary(email) do
+    case Repo.get_by(User, email: email) do
+      nil ->
+        dummy_checkpw()
+        {:error, "Login Error"}
+      user ->
+        {:ok, user}
+    end
+  end
   @doc """
   Returns the list of users.
 
