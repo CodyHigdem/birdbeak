@@ -34,3 +34,12 @@ npm-debug.log
 /installer/tmp
 
 erl_crash.dump
+/_build
+/cover
+/deps
+/doc
+/.fetch
+erl_crash.dump
+*.ez
+*.beam
+/config/*.secret.exs
