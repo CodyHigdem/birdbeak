@@ -17,4 +17,10 @@ defmodule BirdbeakWeb.FallbackController do
     |> put_status(:not_found)
     |> render(BirdbeakWeb.ErrorView, :"404")
   end
+
+  def call(conn, {:error, :anauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> json(%{error: "Login Error"})
+  end
 end
