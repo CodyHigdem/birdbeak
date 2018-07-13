@@ -2,8 +2,8 @@ defmodule BirdbeakWeb.UserView do
   use BirdbeakWeb, :view
   alias BirdbeakWeb.UserView
 
-  def render("jwt.json", %{jwt:jwt}) do
-    %{jwt:jwt}
+  def render("jwt.json", %{jwt: jwt}) do
+    %{jwt: jwt}
   end
 
   def render("index.json", %{users: users}) do
