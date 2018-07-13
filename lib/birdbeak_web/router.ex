@@ -19,6 +19,10 @@ defmodule BirdbeakWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/api/v1", BirdbeakWeb do
+     pipe_through :api
+   end
+
   # Other scopes may use custom stacks.
   # scope "/api", BirdbeakWeb do
   #   pipe_through :api
