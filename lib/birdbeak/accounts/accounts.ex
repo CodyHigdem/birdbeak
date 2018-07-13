@@ -30,7 +30,7 @@ defmodule Birdbeak.Accounts do
     end
   end
 
-  defp verify_password(password, $User{} = user) when is_binary(password) do
+  defp verify_password(password, %User{} = user) when is_binary(password) do
     if checkpw(password, user.password_hash) do
       {:ok, user}
     else
