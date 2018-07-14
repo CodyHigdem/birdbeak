@@ -1,6 +1,8 @@
 defmodule BirdbeakWeb.Router do
   use BirdbeakWeb, :router
 
+  alias Birdbeak.Guardian
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -11,6 +13,10 @@ defmodule BirdbeakWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  pipeline :jwt_authenticated do
+    plug Guardian.AuthPipeline
   end
 
   scope "/", BirdbeakWeb do
@@ -24,7 +30,7 @@ defmodule BirdbeakWeb.Router do
 
      post "/sign_up", UserController, :create
      post "/sign_in", UserController, :sign_in
-     
+
      #resources "/users", UserController, only: [:create, :show]
      """
      By adding only: [:create, :show] to our public API route, we are only allowing unauthenticated users
@@ -32,6 +38,8 @@ defmodule BirdbeakWeb.Router do
      update, or any other UserController methods through this public endpoint.
      """
    end
+
+
 
   # Other scopes may use custom stacks.
   # scope "/api", BirdbeakWeb do
