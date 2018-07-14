@@ -39,6 +39,11 @@ defmodule BirdbeakWeb.Router do
      """
    end
 
+   scope "/api/v1", BirdbeakWeb do
+      pipe_through [:api, :jwt_authenticated]
+
+      post "/my_user", UserController, :show
+    end
 
 
   # Other scopes may use custom stacks.
